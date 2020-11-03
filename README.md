@@ -1,2 +1,2 @@
-# lookup-flix-app
+# flix-lookup-app
  Look Up Flix!
