@@ -3,6 +3,8 @@ const express = require('express'),
 
 const app = express();
 
+let topMovies = [{title: 'Citizen Kane', year: '1941'}, {title: 'Dude, Where\'s my Car?', year: '2000'}];
+
 app.use(morgan('common'));
 
 app.use(express.static('public'));
