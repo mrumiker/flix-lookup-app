@@ -11,6 +11,9 @@
   <meta name="description" content="MyFlix API Documentation">
   <meta name="author" content="Charles Umiker">
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
   <!-- <link rel="stylesheet" href="css/styles.css"> -->
 
 </head>
@@ -19,11 +22,149 @@
 
   <main>
 
-    <h1>MyFlix API</h1>
+    <h1 class="text-center">MyFlix API</h1>
 
-    <h2>This incredible API will let YOU look up movies!</h2>
+    <h2 class="text-center text-muted">This incredible API will let YOU look up movies!</h2>
 
-    <p>MyFlix API is a server-side application that client-side developers can use to provide up-to-date, comprehensive movie info to users.</p>
+    <p class="text-center">MyFlix API is a server-side application that client-side developers can use to provide up-to-date, comprehensive movie info to users.</p>
+
+    <table class="table table-striped">
+
+      <thead>
+
+        <tr>
+          <th>Description</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request</th>
+          <th>Response</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Return a List of ALL movies to the user</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>JSON: a list of all movies in the database with title, description, genre, director, image URL, whether it’s featured or not.<br />Example:
+            <p>
+              {<br />
+              'Title': 'The Wizard of Oz',<br />
+              'Description': 'Dorothy and Friends follow the Yellow Brick Road',<br />
+              'Genre': 'Classic',<br />
+              'Director': 'Victor Fleming',<br />
+              'ImageURL': 'wizard_of_oz.png',<br />
+              'Featured': 'Y'<br />
+              }
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user; use %20 for spaces</td>
+          <td>/movies/:title</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>JSON: title, description, genre, director, image URL, whether it’s featured or not.<br />Example: See Above</td>
+        </tr>
+
+        <tr>
+          <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+          <td>/movies/genres/:genre</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>JSON: description of a particular genre<br />Example:
+            <p>
+              {<br />
+              'Genre': 'Comedy',<br />
+              'Description': 'A genre that attempts to elicit laughter.'<br />
+              }
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Return data about a director (bio, birth year, death year) by name; use %20 for spaces</td>
+          <td>/movies/directors/:name</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>JSON: Name, Bio, Birth Year, Death Year<br />Example:
+            <p>
+              {<br />
+                'Name': 'Orson Welles',<br />
+                'Bio': 'Orson Welles was an American actor, writer, and director who wrote and directed <em>Citizen Kane</em>.',<br />
+                'Born': '1915',<br />
+                'Died': '1985'<br />
+              }
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>JSON<br />Example:
+            <p>
+              {<br />
+                'Username': 'johnny2345',<br />
+                'Password': '12345',<br />
+                'Email': 'johnny2345@example.com',<br />
+                'Date of Birth': '01/01/2000'<br />
+              }
+            </p>
+          </td>
+          <td>JSON<br />Example:
+            <p>
+              {<br />
+                'Id': 'hadsfkguayfgkug32786547826',<br />
+                'Username': 'johnny2345',<br />
+                'Password': '12345',<br />
+                'Email': 'johnny2345@example.com',<br />
+                'Date of Birth': '01/01/2000'<br />
+              }
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Allow users to update their user info (username, password, email, date of birth)</td>
+          <td>/users/:Username</td>
+          <td>PUT</td>
+          <td>See Above</td>
+          <td>See Above</td>
+        </tr>
+
+        <tr>
+          <td>Allow users to add a movie to their list of favorites, use %20 for spaces</td>
+          <td>/users/:Username/add/:Title</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>A text message confirming that the movie was added to favorites.</td>
+        </tr>
+
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites</td>
+          <td>/users/:Username/remove/:Title</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message confirming that the movie was removed from favorites.</td>
+        </tr>
+
+        <tr>
+          <td>Allow existing users to deregister</td>
+          <td>/users/delete/:Username</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>A text message confirming that the user was removed from the database.</td>
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </main>
 
