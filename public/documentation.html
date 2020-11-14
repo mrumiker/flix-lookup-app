@@ -51,14 +51,26 @@
           <td>None</td>
           <td>JSON: a list of all movies in the database with title, description, genre, director, image URL, whether it’s featured or not.<br />Example:
             <p>
+              [<br />
               {<br />
-              'Title': 'The Wizard of Oz',<br />
-              'Description': 'Dorothy and Friends follow the Yellow Brick Road',<br />
-              'Genre': 'Classic',<br />
-              'Director': 'Victor Fleming',<br />
-              'ImageURL': 'wizard_of_oz.png',<br />
-              'Featured': 'Y'<br />
-              }
+                "Genre": {<br />
+                  "Name": "Thriller",<br />
+                  "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."<br />
+                },<br />
+                "Director": {<br />
+                  "Name": "Jonathan Demme",<br />
+                  "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",<br />
+                  "Birth": "1944",<br />
+                  "Death": "2017"<br />
+                },<br />
+                "Actors": ["Anthony Hopkins", "Jodie Foster"],<br />
+                "_id": "5faed9b5f3ac25e9b1675bff",<br />
+                "Title": "Silence of the Lambs",<br />
+                "Description": "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.",<br />
+                "ImagePath": "silenceofthelambs.png",<br />
+                "Featured": true<br />
+              }<br />
+              ]
             </p>
           </td>
         </tr>
@@ -72,17 +84,12 @@
         </tr>
 
         <tr>
-          <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+          <td>Return data about a genre (description) by name (e.g., “Thriller”)</td>
           <td>/movies/genres/:genre</td>
           <td>GET</td>
           <td>None</td>
-          <td>JSON: description of a particular genre<br />Example:
-            <p>
-              {<br />
-              'Genre': 'Comedy',<br />
-              'Description': 'A genre that attempts to elicit laughter.'<br />
-              }
-            </p>
+          <td>Description of a particular genre<br />Example:
+            <p>Drama is a category of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.</p>
           </td>
         </tr>
 
@@ -91,14 +98,10 @@
           <td>/movies/directors/:name</td>
           <td>GET</td>
           <td>None</td>
-          <td>JSON: Name, Bio, Birth Year, Death Year<br />Example:
-            <p>
-              {<br />
-                'Name': 'Orson Welles',<br />
-                'Bio': 'Orson Welles was an American actor, writer, and director who wrote and directed <em>Citizen Kane</em>.',<br />
-                'Born': '1915',<br />
-                'Died': '1985'<br />
-              }
+          <td>Bio with Year of Birth and Year of Death (if deceased)<br />Example:
+            <p>Orson Welles was an American actor, director, writer and producer who is remembered for his innovative work in radio, theatre and film.<br />
+              Born: 1915<br />
+              Died: 1985
             </p>
           </td>
         </tr>
@@ -113,25 +116,27 @@
                 'Username': 'johnny2345',<br />
                 'Password': '12345',<br />
                 'Email': 'johnny2345@example.com',<br />
-                'Date of Birth': '01/01/2000'<br />
+                'Birthday': '01/01/2000'<br />
               }
             </p>
           </td>
           <td>JSON<br />Example:
             <p>
               {<br />
-                'Id': 'hadsfkguayfgkug32786547826',<br />
-                'Username': 'johnny2345',<br />
-                'Password': '12345',<br />
-                'Email': 'johnny2345@example.com',<br />
-                'Date of Birth': '01/01/2000'<br />
+                "FavoriteMovies": [],<br />
+                "_id": "5faf5846d4eca515f614cf54",<br />
+                "Username": "johnny2345",<br />
+                "Password": "12345",<br />
+                "Email": "johnny2345@example.com",<br />
+                "Birthday": "2000-01-01T05:00:00.000Z",<br />
+                "__v": 0<br />
               }
             </p>
           </td>
         </tr>
 
         <tr>
-          <td>Allow users to update their user info (username, password, email, date of birth)</td>
+          <td>Allow users to update their user info (username, password, email, birthday)</td>
           <td>/users/:Username</td>
           <td>PUT</td>
           <td>See Above</td>
@@ -139,19 +144,31 @@
         </tr>
 
         <tr>
-          <td>Allow users to add a movie to their list of favorites, use %20 for spaces</td>
-          <td>/users/:Username/add/:Title</td>
+          <td>Allow users to add a movie to their list of favorites, using movieId</td>
+          <td>/users/:Username/add/:MovieId</td>
           <td>POST</td>
           <td>None</td>
-          <td>A text message confirming that the movie was added to favorites.</td>
+          <td>JSON<br />Example:
+            <p>
+              {<br />
+                "FavoriteMovies": [<br />
+                "5faed9b5f3ac25e9b1675c04"<br />
+                ],<br />
+                "_id": "5faedd8a6abb7890b4507a58",<br />
+                "Username": "thequeen45",<br />
+                "Password": "hljkhfealjkhdlah7q68369",<br />
+                "Email": "thequeen45@example.com"<br />
+              }<br />
+            </p>
+          </td>
         </tr>
 
         <tr>
-          <td>Allow users to remove a movie from their list of favorites</td>
-          <td>/users/:Username/remove/:Title</td>
+          <td>Allow users to remove a movie from their list of favorites, using movieId</td>
+          <td>/users/:Username/remove/:MovieId</td>
           <td>DELETE</td>
           <td>None</td>
-          <td>A text message confirming that the movie was removed from favorites.</td>
+          <td>See Above</td>
         </tr>
 
         <tr>
