@@ -14,6 +14,9 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 
 const app = express();
 
+const passport = require('passport');
+require('./passport');
+
 //let topMovies = [{title: 'Citizen Kane', year: '1941'}, {title: 'Dude, Where\'s my Car?', year: '2000'}];
 
 app.use(morgan('common'));
@@ -22,8 +25,10 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
+let auth = require('./auth')(app);
+
 //Get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
