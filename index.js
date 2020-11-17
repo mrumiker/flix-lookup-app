@@ -238,7 +238,7 @@ app.delete('/users/delete/:username', passport.authenticate('jwt', { session: fa
 });
 
 
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/', (req, res) => {
   res.send('Nice to see you! 👋')
 });
 
