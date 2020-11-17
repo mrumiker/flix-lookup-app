@@ -2,7 +2,8 @@ const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  cors = require('cors');
+  cors = require('cors'),
+  { check, validationResult } = require('express-validator');
 
 const Models = require('./models.js');
 
@@ -98,7 +99,20 @@ app.get('/movies/directors/:name', passport.authenticate('jwt', { session: false
 });
 
 //Add a user
-app.post('/users', (req, res) => {
+app.post('/users',
+[
+  check('Username', 'Username of at least 5 characters is required.').isLength({min: 5}),
+  check('Username', 'Username must contain alphanumeric characters only.').isAlphanumeric(),
+  check('Password', 'Password is required.').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid.').isEmail()
+], (req, res) => {
+
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
   .then((user) => {
