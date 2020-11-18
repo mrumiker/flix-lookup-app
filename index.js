@@ -10,9 +10,14 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//  useNewUrlParser: true, useUnifiedTopology: true
+//});
+
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 });
+
 
 const app = express();
 
@@ -189,7 +194,7 @@ app.get('/users/:username', passport.authenticate('jwt', { session: false }), (r
 //Add a movie to a user's list of favorites
 app.post('/users/:username/add/:MovieId', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate( { Username: req.params.username }, {
-    $push: { FavoriteMovies: req.params.MovieId }
+    $push: { Favorites: req.params.MovieId }
   },
   { new: true },
   (err, updatedUser) => {
@@ -206,7 +211,7 @@ app.post('/users/:username/add/:MovieId', passport.authenticate('jwt', { session
 //Remove Movie from favorites
 app.delete('/users/:username/remove/:MovieId', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate( { Username: req.params.username }, {
-    $pull: { FavoriteMovies: req.params.MovieId }
+    $pull: { Favorites: req.params.MovieId }
   },
   { new: true },
   (err, updatedUser) => {
