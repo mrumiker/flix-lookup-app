@@ -18,7 +18,6 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 });
 
-
 const app = express();
 
 const passport = require('passport');
@@ -257,8 +256,7 @@ app.delete('/users/delete/:username', passport.authenticate('jwt', { session: fa
     });
 });
 
-
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/', (req, res) => {
   res.send('Nice to see you! 👋')
 });
 
@@ -267,8 +265,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Oh no! That didn\'t work! 🙈')
 });
 
-
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
-console.log('Your app is listening on Port ' + port);
+  console.log('Your app is listening on Port ' + port);
 });
