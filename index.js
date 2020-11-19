@@ -157,12 +157,27 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 });
 
 //Update a user's info, by username
-app.put('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', { session: false }),
+[
+  check('Username', 'Username of at least 5 characters is required.').isLength({min: 5}),
+  check('Username', 'Username must contain alphanumeric characters only.').isAlphanumeric(),
+  check('Password', 'Password is required.').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid.').isEmail()
+], (req, res) => {
+
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
+
   Users.findOneAndUpdate( { Username: req.params.username }, {
     $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
@@ -243,7 +258,7 @@ app.delete('/users/delete/:username', passport.authenticate('jwt', { session: fa
 });
 
 
-app.get('/', (req, res) => {
+app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   res.send('Nice to see you! 👋')
 });
 
