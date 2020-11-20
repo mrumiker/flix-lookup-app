@@ -25,9 +25,9 @@ require('./passport');
 
 //let topMovies = [{title: 'Citizen Kane', year: '1941'}, {title: 'Dude, Where\'s my Car?', year: '2000'}];
 
-app.use(morgan('common'));
+app.use(morgan('common')); //morgan module for logging
 
-app.use(express.static('public'));
+app.use(express.static('public')); //let user see the documentation page
 
 app.use(bodyParser.json());
 
@@ -260,7 +260,7 @@ app.get('/', (req, res) => {
   res.send('Nice to see you! 👋')
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => { //should this be up by the other middleware functions?
   console.error(err.stack);
   res.status(500).send('Oh no! That didn\'t work! 🙈')
 });
