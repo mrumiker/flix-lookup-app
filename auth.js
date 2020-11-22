@@ -1,3 +1,5 @@
+//This generates jwt
+
 const jwtSecret = 'your_jwt_secret';
 
 const jwt = require('jsonwebtoken'),
