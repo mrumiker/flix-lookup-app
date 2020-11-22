@@ -134,7 +134,7 @@ app.post('/users',
       .catch((error) => {
         console.error(error);
         res.status(500).send('Error: ' + error);
-      })
+      });
     }
   })
   .catch((error) => {
@@ -150,8 +150,8 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
     res.status(201).json(users);
   })
   .catch((err) => {
-    console.error(error);
-    res.status(500).send('Error: ' + error);
+    console.error(err);
+    res.status(500).send('Error: ' + err);
   });
 });
 
@@ -184,8 +184,8 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false }),
   { new: true },
   (err, updatedUser) => {
     if (err)  {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
+      console.error(err);
+      res.status(500).send('Error: ' + err);
     }
     else {
       res.json(updatedUser);
@@ -230,8 +230,8 @@ app.delete('/users/:username/remove/:MovieId', passport.authenticate('jwt', { se
   { new: true },
   (err, updatedUser) => {
     if (err) {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
+      console.error(err);
+      res.status(500).send('Error: ' + err);
     }
     else {
       res.json(updatedUser);
