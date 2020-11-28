@@ -31,7 +31,7 @@ app.use(express.static('public')); //let user see the documentation page
 
 app.use(bodyParser.json());
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234'];
+let allowedOrigins = ['*'];
 
 app.use(cors({
   origin: (origin, callback) => {
