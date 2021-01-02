@@ -31,7 +31,7 @@ app.use(express.static('public')); //let user see the documentation page
 
 app.use(bodyParser.json());
 
-let allowedOrigins = ['http://localhost:1234', 'http://localhost:58173'];
+let allowedOrigins = ['http://localhost:1234', 'http://localhost:58173', 'http://cbu.netlify.app'];
 
 app.use(cors({
   origin: (origin, callback) => {
