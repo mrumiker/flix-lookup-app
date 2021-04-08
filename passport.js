@@ -1,4 +1,4 @@
-//This handles authentication
+// This handles authentication
 
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
@@ -9,6 +9,9 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
+/**
+ * Matches user input with user data during authentication 
+ */
 passport.use(new LocalStrategy({
   usernameField: 'Username',
   passwordField: 'Password'
@@ -20,14 +23,14 @@ passport.use(new LocalStrategy({
       return callback(error);
     }
 
-    if(!user) {
+    if (!user) {
       console.log('Incorrect Username');
-      return callback(null, false, {message: 'Incorrect Username'});
+      return callback(null, false, { message: 'Incorrect Username' });
     }
 
     if (!user.validatePassword(password)) {
       console.log('Incorrect password');
-      return callback(null, false, {message: 'Incorrect Password'});
+      return callback(null, false, { message: 'Incorrect Password' });
     }
 
     console.log('Finished');
@@ -36,6 +39,9 @@ passport.use(new LocalStrategy({
   });
 }));
 
+/**
+ * matches user token for authorization
+ */
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'your_jwt_secret'
